@@ -1,14 +1,14 @@
 #include <NtpClientLib.h>         // https://github.com/gmag11/NtpClient
 #include <ESP8266WiFi.h>
 
-#include "UserConfig.h"
-#include "Geolocate.h"
-#include "Timezone.h"
-#include "Geocode.h"
+#include "GoogleGeolocation.h"
 
-// NTP Server:
+// Wifi
+static char myssid[] = "SSID";          // your network SSID (name)
+static char mypass[] = "PASSWORD";          // your network password
+
+// NTP server
 const char ntpServerName[] = "pool.ntp.org";
-bool ntpAcquired = false;
 
 // Values acquired from Google
 double latitude;
@@ -59,7 +59,6 @@ void setup()
     }
     else
     {
-      ntpAcquired = true;
       Serial.println("Got NTP time - " + NTP.getTimeDateString(NTP.getLastNTPSync()));
     }
   });
