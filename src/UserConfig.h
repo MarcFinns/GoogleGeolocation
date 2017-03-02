@@ -11,7 +11,7 @@ static char mypass[] = "PASSWORD";          // your network password
 
 #define MAX_SSIDS 10
 
-static const String googleApiKey = "GOOGLE SPI KEY";
+static const String googleApiKey = "GOOGLE API KEY";
 
 static const String geolocation_Host = "www.googleapis.com";
 static const String geolocation_url = "/geolocation/v1/geolocate?key=";
