@@ -2,13 +2,6 @@
 
 #include <ESP8266WiFi.h>
 
-// Wifi
-static char myssid[] = "SSID";          // your network SSID (name)
-static char mypass[] = "PASSWORD";          // your network password
-
-// NTP server
-const char ntpServerName[] = "pool.ntp.org";
-
 // Geolocation
 
 #define MAX_SSIDS 10

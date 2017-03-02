@@ -3,7 +3,7 @@
 #include <NtpClientLib.h>         // https://github.com/gmag11/NtpClient
 #include <JsonStreamingParser.h>
 #include "UserConfig.h"
-#include "Geolocate.h"
+#include "GoogleGeolocation.h"
 
 
 #define min(a,b) ((a)<(b)?(a):(b))

@@ -4,7 +4,7 @@
 #include <NtpClientLib.h>         // https://github.com/gmag11/NtpClient
 #include <JsonStreamingParser.h>
 #include "UserConfig.h"
-#include "Geocode.h"
+#include "GoogleGeolocation.h"
 
 /**********************************************************
    Step 3 - Geocoding

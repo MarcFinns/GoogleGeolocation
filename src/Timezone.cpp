@@ -1,6 +1,6 @@
 #include "ESP8266WiFi.h"
 #include <JsonStreamingParser.h>
-#include "Timezone.h"
+#include "GoogleGeolocation.h"
 #include "UserConfig.h"
 
 //extern NTPClient NTP;
