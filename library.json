@@ -1,0 +1,16 @@
+
+{
+  "name": "GoogleGeolocation",
+  "keywords": "Geolocation, Geocoding, Timezone",
+  "description": "A library for obtaining complete positioning in time and space fron Google API",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/MarcFinns/GoogleGeolocation.git"
+  },
+  "version": "1.0.0",
+  "examples": "examples/*/*.ino",
+  "frameworks": "arduino",
+  "platforms": 
+    "espressif8266"
+}
