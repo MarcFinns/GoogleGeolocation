@@ -13,21 +13,28 @@
 bool Geocode::acquire(double latitude, double longitude)
 {
   //Connect to the client and make the api call
-  if (httpsConnect(maps_Host, maps_fingerprint))
+  if (httpsConnect(FPSTR(maps_Host), FPSTR(maps_fingerprint)))
   {
-    //Serial.println(geocoding_url + String(latitude, 8) + "," + String(longitude, 8) + "&key="  + googleApiKey);
+    // Serial.println(geocoding_url + String(latitude, 8) + "," + String(longitude, 8) + "&key="  + googleApiKey);
 
     // Concatenate url and key
-    if (httpsGet(maps_Host, geocoding_url + String(latitude, 8) + "," + String(longitude, 8) + "&key=" + googleApiKey) && skipResponseHeaders())
+    String url = FPSTR(geocoding_url);
+    url += String(latitude, 8);
+    url += F(",");
+    url += String(longitude, 8);
+    url += F("&key=" );
+    url += FPSTR(googleApiKey);
+
+    if (httpsGet(FPSTR(maps_Host), url) && skipResponseHeaders())
     {
       // Invalidate current values
-      street = "";
-      streetNumber = "";
-      postCode = "";
-      subLocality = "";
-      town = "";
-      country = "";
-      formattedAddress = "";
+      street = FPSTR(empty);
+      streetNumber = FPSTR(empty);
+      postCode = FPSTR(empty);
+      subLocality = FPSTR(empty);
+      town = FPSTR(empty);
+      country = FPSTR(empty);
+      formattedAddress = FPSTR(empty);
 
       while (client.available())
       {
@@ -68,7 +75,7 @@ void Geocode::whitespace(char c) {
 }
 
 void Geocode::startDocument() {
-  //   Serial.println("start document");
+  //   // Serial.println("start document");
 }
 
 void Geocode::key(String key)
@@ -79,42 +86,42 @@ void Geocode::key(String key)
 
 void Geocode::value(String value)
 {
-  //   Serial.println("value: " + value);
-  if (currentKey == "long_name")
+  //   // Serial.println("value: " + value);
+  if (currentKey == F("long_name"))
     savedValue = value;
-  else if (currentKey == "types")
+  else if (currentKey == F("types"))
   {
-    if (value == "route")
+    if (value == F("route"))
     {
       if (street == "")
         street = savedValue;
     }
-    else if (value == "street_number")
+    else if (value == F("street_number"))
     {
       if (streetNumber == "")
         streetNumber = savedValue;
     }
-    else if (value == "postal_code")
+    else if (value == F("postal_code"))
     {
       if (postCode == "")
         postCode = savedValue;
     }
-    else if (value == "sublocality")
+    else if (value == F("sublocality"))
     {
       if (country == "")
         subLocality = savedValue;
     }
-    else if (value == "locality")
+    else if (value == F("locality"))
     {
       if (town == "")
         town = savedValue;
     }
-    else if (value == "country")
+    else if (value == F("country"))
     {
       if (country == "")
         country = savedValue;
     }
-    else if (value == "formatted_address")
+    else if (value == F("formatted_address"))
     {
       if (formattedAddress == "")
         formattedAddress = savedValue;
@@ -128,19 +135,19 @@ void Geocode::endArray() {
 }
 
 void Geocode::endObject() {
-  //   Serial.println("end object. ");
+  //   // Serial.println("end object. ");
 }
 
 void Geocode::endDocument() {
-  //   Serial.println("end document. ");
+  //   // Serial.println("end document. ");
 }
 
 void Geocode::startArray() {
-  //   Serial.println("start array. ");
+  //   // Serial.println("start array. ");
 }
 
 void Geocode::startObject() {
-  //   Serial.println("start object. ");
+  //   // Serial.println("start object. ");
 }
 
 String Geocode::getStreet()

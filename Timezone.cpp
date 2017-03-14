@@ -14,12 +14,19 @@ bool Timezone::acquire(double latitude, double longitude, String timestamp)
    **********************************************************/
 
   //Connect to the client and make the api call
-  if (httpsConnect(maps_Host, maps_fingerprint))
+  if (httpsConnect(FPSTR(maps_Host), FPSTR(maps_fingerprint)))
   {
-    // Serial.println(timeZone_url + String(latitude, 8) + "," + String(longitude, 8) + "&timestamp=" + timestamp + "&key=" + googleApiKey);
-
     // Concatenate url and key
-    if (httpsGet(maps_Host, timeZone_url + String(latitude, 6) + "," + String(longitude, 6) + "&timestamp=" + timestamp + "&key=" + googleApiKey) && skipResponseHeaders())
+    String url = FPSTR(timeZone_url);
+    url += String(latitude, 6);
+    url += F(",") ;
+    url += String(longitude, 6) ;
+    url += F("&timestamp=") ;
+    url += timestamp;
+    url += F("&key=") ;
+    url += FPSTR(googleApiKey);
+
+    if (httpsGet(FPSTR(maps_Host), url) && skipResponseHeaders())
     {
       JsonStreamingParser parser;
       parser.setListener(this);
@@ -42,7 +49,7 @@ bool Timezone::acquire(double latitude, double longitude, String timestamp)
   else
   {
     // Could not connect
-    //Serial.println("Could not connect");
+    // Serial.println("Could not connect");
     return false;
   }
 
@@ -74,19 +81,19 @@ void Timezone::key(String key) {
 void Timezone::value(String value)
 {
   // Serial.println("value: " + value);
-  if (currentKey == "dstOffset")
+  if (currentKey == F("dstOffset"))
   {
     dstOffset = value.toInt();
   }
-  else if (currentKey == "rawOffset")
+  else if (currentKey == F("rawOffset"))
   {
     rawOffset = value.toInt();
   }
-  else if (currentKey == "timeZoneId")
+  else if (currentKey == F("timeZoneId"))
   {
     timeZoneId = value;
   }
-  else if (currentKey == "timeZoneName")
+  else if (currentKey == F("timeZoneName"))
   {
     timeZoneName = value;
   }

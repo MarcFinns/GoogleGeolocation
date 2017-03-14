@@ -1,23 +1,20 @@
 #pragma once
 
-#include <ESP8266WiFi.h>
+#define MAX_SSIDS 8
 
-// Geolocation
+const char PROGMEM  googleApiKey[] = "YOUR API KEY";
 
-#define MAX_SSIDS 10
+const char PROGMEM  geolocation_Host[] = "www.googleapis.com";
+const char PROGMEM  geolocation_url[] = "/geolocation/v1/geolocate?key=";
 
-static const String googleApiKey = "GOOGLE API KEY";
+// SHA1 fingerprint of the maps.googleapi.com certificate (optional)
+const char PROGMEM  maps_fingerprint[] = "";
 
-static const String geolocation_Host = "www.googleapis.com";
-static const String geolocation_url = "/geolocation/v1/geolocate?key=";
+const char PROGMEM maps_Host[] = "maps.googleapis.com";
 
-// Time zone and Geocoding
+const char PROGMEM timeZone_url[] = "/maps/api/timezone/json?location=";
 
-// SHA1 fingerprint of the maps.googleapi.com certificate
-static const String maps_fingerprint = "22 37 4D 58 43 F4 A1 24 12 71 2B 74 7A FC 36 FC 24 A0 F0 9D";
+const char PROGMEM geocoding_url[] = "/maps/api/geocode/json?latlng=";
 
-static const String maps_Host = "maps.googleapis.com";
-static const String  timeZone_url = "/maps/api/timezone/json?location=";
-
-static const String  geocoding_url = "/maps/api/geocode/json?latlng=";
+const char PROGMEM empty[] = "";
 

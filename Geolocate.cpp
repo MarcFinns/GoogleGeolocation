@@ -17,53 +17,60 @@ bool Geolocate::acquire()
 {
 
   // Get precise location via WiFi triangulation
-  //Serial.println("WiFI scan start");
+  // Serial.println(F("WiFI scan start"));
 
   char bssid[6];
 
   // SCAN AVAILABLE NETWORKS
   int n = min(WiFi.scanNetworks(false, true), MAX_SSIDS);
 
-  //Serial.println("scan done");
+  // Serial.println(F("scan done"));
 
   // Found any?
   if (n == 0)
   {
-    // Serial.println("no networks found, resorting to IP address only");
+    // Serial.println(F("no networks found, resorting to IP address only"));
   }
   else
   {
-    //Serial.print(n);
-    //Serial.println(" networks found...");
+    // Serial.print(n);
+    // Serial.println(F(" networks found..."));
 
     // Build the postData for Google Geolocation API...
-    String postData = "{\n \"considerIp\": \"true\", \n \"wifiAccessPoints\": [\n";
+    String postData = F("{\n \"considerIp\": \"true\", \n \"wifiAccessPoints\": [\n");
     for (int j = 0; j < n; ++j)
     {
-      postData += "{\n";
-      postData += "\"macAddress\" : \"";
+      postData += F("{\n");
+      postData += F("\"macAddress\" : \"");
       postData += (WiFi.BSSIDstr(j));
-      postData += "\",\n";
-      postData += "\"signalStrength\": ";
+      postData += F("\",\n");
+      postData += F("\"signalStrength\": ");
       postData += WiFi.RSSI(j);
-      postData += "\n";
+      postData += F("\n");
       if (j < n - 1)
       {
-        postData += "},\n";
+        postData += F("},\n");
       }
       else
       {
-        postData += "}\n";
+        postData += F("}\n");
       }
     }
-    postData += ("]\n");
-    postData += ("}\n");
+    postData += F("]\n");
+    postData += F("}\n");
 
+    // Serial.println(F("Connecting..."));
     //Connect to the client and make the api call
-    if (httpsConnect(geolocation_Host, ""))
+    if (httpsConnect(FPSTR(geolocation_Host), ""))
     {
-      if (httpsPost(geolocation_Host, geolocation_url + googleApiKey, postData) && skipResponseHeaders())
+      // Serial.println(F("Connected..."));
+
+      String url = FPSTR(geolocation_url);
+      url += FPSTR(googleApiKey);
+
+      if (httpsPost(FPSTR(geolocation_Host), url, postData) && skipResponseHeaders())
       {
+        // Serial.println(F("Posted..."));
         JsonStreamingParser parser;
         parser.setListener(this);
         char c;
@@ -74,6 +81,7 @@ bool Geolocate::acquire()
           c = client.read();
           parser.parse(c);
         }
+        // Serial.println(F("Parsed..."));
       }
       else
       {
@@ -98,11 +106,11 @@ bool Geolocate::isValid()
 }
 
 void Geolocate::whitespace(char c) {
-  //Serial.println("whitespace");
+  // Serial.println(F("whitespace"));
 }
 
 void Geolocate::startDocument() {
-  // Serial.println("start document");
+  // Serial.println(F("start document"));
 }
 
 void Geolocate::key(String key)
@@ -115,13 +123,13 @@ void Geolocate::key(String key)
 void Geolocate::value(String value)
 {
   // Serial.println("value: " + value);
-  if (currentParent == "location")
+  if (currentParent == F("location"))
   {
-    if (currentKey == "lat")
+    if (currentKey == F("lat"))
     {
       latitude = value.toFloat();
     }
-    else if (currentKey == "lng")
+    else if (currentKey == F("lng"))
     {
       longitude = value.toFloat();
     }
@@ -129,26 +137,26 @@ void Geolocate::value(String value)
 }
 
 void Geolocate::endArray() {
-  // Serial.println("end array. ");
+  // Serial.println(F("end array. "));
 }
 
 void Geolocate::endObject()
 {
-  // Serial.println("end object. ");
+  // Serial.println(F("end object. "));
   currentParent = "";
 }
 
 void Geolocate::endDocument() {
-  // Serial.println("end document. ");
+  // Serial.println(F("end document. "));
 }
 
 void Geolocate::startArray() {
-  // Serial.println("start array. ");
+  // Serial.println(F("start array. "));
 }
 
 void Geolocate::startObject()
 {
-  // Serial.println("start object. ");
+  // Serial.println(F("start object. "));
   currentParent = currentKey;
 }
 

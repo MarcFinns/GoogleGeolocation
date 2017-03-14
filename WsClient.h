@@ -7,12 +7,12 @@ class WsClient
   public:
     WsClient()
     {
-      //Serial.println("WsClient constructor");
+      // Serial.println("WsClient constructor");
     };
 
     ~WsClient()
     {
-      //Serial.println("WsClient destructor");
+      // Serial.println("WsClient destructor");
     };
 
     bool httpsConnect(String hostName, String fingerprint);

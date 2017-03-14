@@ -8,10 +8,10 @@ class Timezone : public JsonListener, public WsClient
 {
   public:
     Timezone() {
-      //Serial.println("Timezone constructor");
+      // Serial.println("Timezone constructor");
     };
     ~Timezone() {
-      //Serial.println("Timezone destructor");
+      // Serial.println("Timezone destructor");
     };
 
     bool acquire(double latitude, double longitude, String timestamp);
@@ -44,10 +44,10 @@ class Geolocate : public JsonListener, public WsClient
 {
   public:
     Geolocate() {
-      //Serial.println("Geolocate constructor");
+      // Serial.println("Geolocate constructor");
     };
     ~Geolocate() {
-      //Serial.println("Geolocate destructor");
+      // Serial.println("Geolocate destructor");
     };
 
     bool acquire();
@@ -77,10 +77,10 @@ class Geocode : public JsonListener, public WsClient
 {
   public:
     Geocode() {
-      //Serial.println("Geocode constructor");
+      // Serial.println("Geocode constructor");
     };
     ~Geocode() {
-      //Serial.println("Geocode destructor");
+      // Serial.println("Geocode destructor");
     };
 
     bool acquire(double latitude, double longitude);
